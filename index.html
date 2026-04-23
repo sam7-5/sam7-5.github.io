@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Samuel Verse — Software & Security Engineer</title>
+<meta name="description" content="Samuel Verse. Software & Security Engineer specializing in Python, cryptography, malware analysis, and enterprise network defense." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,700;9..144,900&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg:        #0d0c0a;
+    --bg-2:      #141210;
+    --surface:   #18150f;
+    --border:    #2a251d;
+    --border-2:  #3a332a;
+    --fg:        #ede4d3;
+    --fg-muted:  #948a7b;
+    --fg-dim:    #5a5346;
+    --accent:    #e8a33d;
+    --accent-2:  #8fc084;
+    --accent-3:  #d46a5c;
+    --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --serif: "Fraunces", ui-serif, Georgia, serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--mono);
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Scanline effect */
+  body::after {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 99;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.00) 0px,
+      rgba(255,255,255,0.00) 2px,
+      rgba(255,255,255,0.015) 3px,
+      rgba(255,255,255,0.00) 4px
+    );
+  }
+
+  ::selection { background: var(--accent); color: var(--bg); }
+
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--border-2); }
+
+  a { color: inherit; text-decoration: none; }
+
+  .container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ───────── NAV ───────── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: rgba(13, 12, 10, 0.78);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 32px;
+    max-width: 1180px;
+    margin: 0 auto;
+    gap: 24px;
+  }
+  .nav-left {
+    font-size: 12px;
+    color: var(--fg-muted);
+    letter-spacing: 0.02em;
+  }
+  .nav-left .prompt { color: var(--accent); }
+  .nav-left .path { color: var(--fg); font-weight: 500; }
+
+  .nav-right {
+    display: flex;
+    gap: 24px;
+    font-size: 12px;
+  }
+  .nav-right a {
+    color: var(--fg-muted);
+    transition: color .18s ease;
+    position: relative;
+  }
+  .nav-right a:hover { color: var(--accent); }
+  .nav-right a::before {
+    content: "[ ";
+    opacity: 0;
+    transition: opacity .18s ease;
+  }
+  .nav-right a::after {
+    content: " ]";
+    opacity: 0;
+    transition: opacity .18s ease;
+  }
+  .nav-right a:hover::before,
+  .nav-right a:hover::after { opacity: 1; }
+
+  .status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--fg-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent-2);
+    box-shadow: 0 0 8px var(--accent-2);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--accent-2); }
+    50% { opacity: 0.5; box-shadow: 0 0 2px var(--accent-2); }
+  }
+
+  @media (max-width: 780px) {
+    .nav-right { display: none; }
+  }
+
+  /* ───────── HERO ───────── */
+  .hero {
+    padding: 80px 0 60px;
+    position: relative;
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--fg-dim);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+  .hero-meta::before,
+  .hero-meta::after {
+    content: "";
+    flex: 0 0 auto;
+    width: 24px;
+    height: 1px;
+    background: var(--border-2);
+  }
+  .hero-meta::after { flex: 1; }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(48px, 9vw, 132px);
+    line-height: 0.94;
+    letter-spacing: -0.035em;
+    color: var(--fg);
+    margin-bottom: 28px;
+  }
+  .hero h1 .ital {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    font-size: 15px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+  .prompt { color: var(--accent); font-weight: 500; }
+  .typed {
+    color: var(--fg);
+    border-right: 2px solid var(--accent);
+    animation: blink 1s steps(1) infinite;
+    padding-right: 2px;
+  }
+  @keyframes blink {
+    50% { border-right-color: transparent; }
+  }
+
+  .hero-bio {
+    max-width: 620px;
+    font-size: 15px;
+    color: var(--fg-muted);
+    line-height: 1.7;
+    margin-bottom: 48px;
+  }
+  .hero-bio strong {
+    color: var(--fg);
+    font-weight: 500;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin-top: 48px;
+  }
+  .hero-grid > div {
+    padding: 20px 24px;
+    border-right: 1px solid var(--border);
+  }
+  .hero-grid > div:last-child { border-right: none; }
+  .hero-grid .label {
+    font-size: 10px;
+    color: var(--fg-dim);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .hero-grid .value {
+    font-size: 14px;
+    color: var(--fg);
+    font-weight: 500;
+  }
+  .hero-grid .value small {
+    color: var(--fg-muted);
+    font-weight: 400;
+  }
+  @media (max-width: 780px) {
+    .hero-grid { grid-template-columns: repeat(2, 1fr); }
+    .hero-grid > div:nth-child(2) { border-right: none; }
+    .hero-grid > div:nth-child(1),
+    .hero-grid > div:nth-child(2) { border-bottom: 1px solid var(--border); }
+  }
+
+  /* ───────── SECTIONS ───────── */
+  section.block {
+    padding: 96px 0 32px;
+    position: relative;
+  }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 48px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .section-num {
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    font-weight: 500;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(28px, 4.5vw, 48px);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--fg);
+  }
+  .section-title .ital {
+    font-style: italic;
+    color: var(--fg-muted);
+    font-weight: 300;
+  }
+  .section-aside {
+    font-size: 11px;
+    color: var(--fg-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ───────── ABOUT ───────── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 48px;
+  }
+  @media (max-width: 780px) {
+    .about-grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+  .about-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 24px;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+  .about-card .kv {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--border);
+    gap: 16px;
+  }
+  .about-card .kv:last-child { border-bottom: none; }
+  .about-card .kv .k {
+    color: var(--fg-dim);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    flex-shrink: 0;
+  }
+  .about-card .kv .v {
+    color: var(--fg);
+    text-align: right;
+  }
+  .about-card .kv .v .tag {
+    display: inline-block;
+    font-size: 10px;
+    color: var(--accent-2);
+    border: 1px solid var(--border-2);
+    padding: 1px 6px;
+    margin-left: 4px;
+  }
+  .about-prose p {
+    font-size: 15px;
+    color: var(--fg-muted);
+    margin-bottom: 18px;
+    line-height: 1.75;
+  }
+  .about-prose p strong {
+    color: var(--fg);
+    font-weight: 500;
+  }
+  .about-prose .quote {
+    border-left: 2px solid var(--accent);
+    padding: 12px 20px;
+    margin: 24px 0;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--fg);
+    line-height: 1.5;
+  }
+
+  /* ───────── WORK ───────── */
+  .job {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 40px;
+    padding: 40px 0;
+    border-top: 1px solid var(--border);
+    position: relative;
+  }
+  .job:last-child { border-bottom: 1px solid var(--border); }
+  @media (max-width: 780px) {
+    .job { grid-template-columns: 1fr; gap: 12px; }
+  }
+
+  .job-date {
+    font-size: 11px;
+    color: var(--fg-dim);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding-top: 4px;
+  }
+  .job-date .current {
+    display: inline-block;
+    background: var(--accent-2);
+    color: var(--bg);
+    padding: 1px 6px;
+    margin-left: 4px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+
+  .job-body h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 28px;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    margin-bottom: 4px;
+  }
+  .job-body .company {
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+  .job-body .location {
+    font-size: 11px;
+    color: var(--fg-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+  }
+  .job-body ul {
+    list-style: none;
+    margin-bottom: 22px;
+  }
+  .job-body ul li {
+    position: relative;
+    padding-left: 28px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: var(--fg-muted);
+    line-height: 1.7;
+  }
+  .job-body ul li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .job-body ul li strong {
+    color: var(--fg);
+    font-weight: 500;
+  }
+  .job-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .job-tags .tag {
+    font-size: 10px;
+    color: var(--fg-muted);
+    border: 1px solid var(--border-2);
+    padding: 3px 8px;
+    letter-spacing: 0.04em;
+    transition: all .18s ease;
+  }
+  .job-tags .tag:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* ───────── PROJECTS ───────── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--border);
+  }
+  @media (max-width: 980px) {
+    .projects-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .projects-grid { grid-template-columns: 1fr; }
+  }
+
+  .project {
+    padding: 28px 26px 32px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    transition: background .25s ease;
+  }
+  .projects-grid .project:nth-child(3n) { border-right: none; }
+  @media (max-width: 980px) {
+    .projects-grid .project { border-right: 1px solid var(--border); }
+    .projects-grid .project:nth-child(3n) { border-right: 1px solid var(--border); }
+    .projects-grid .project:nth-child(2n) { border-right: none; }
+  }
+  @media (max-width: 640px) {
+    .projects-grid .project { border-right: none; }
+  }
+  .project:hover {
+    background: var(--surface);
+  }
+  .project:hover .project-ext { color: var(--accent); }
+
+  .project-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  .project-idx {
+    font-size: 10px;
+    color: var(--fg-dim);
+    letter-spacing: 0.15em;
+  }
+  .project-ext {
+    font-size: 11px;
+    color: var(--fg-muted);
+    transition: color .2s ease;
+  }
+  .project h4 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 14px;
+    color: var(--fg);
+  }
+  .project p {
+    font-size: 13px;
+    color: var(--fg-muted);
+    line-height: 1.65;
+    margin-bottom: 18px;
+  }
+  .project .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .project .chips span {
+    font-size: 10px;
+    color: var(--fg);
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    padding: 2px 7px;
+    letter-spacing: 0.03em;
+  }
+
+  /* ───────── STACK ───────── */
+  .stack-block {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    font-size: 13px;
+  }
+  .stack-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg-2);
+  }
+  .stack-dots {
+    display: flex;
+    gap: 6px;
+  }
+  .stack-dots span {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--border-2);
+  }
+  .stack-dots span:nth-child(1) { background: var(--accent-3); }
+  .stack-dots span:nth-child(2) { background: var(--accent); }
+  .stack-dots span:nth-child(3) { background: var(--accent-2); }
+  .stack-file {
+    font-size: 11px;
+    color: var(--fg-muted);
+    letter-spacing: 0.04em;
+  }
+
+  .stack-body {
+    padding: 28px 32px 36px;
+    font-family: var(--mono);
+  }
+  .stack-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 24px;
+    padding: 14px 0;
+    border-bottom: 1px dashed var(--border);
+    align-items: start;
+  }
+  .stack-row:last-child { border-bottom: none; }
+  @media (max-width: 640px) {
+    .stack-row { grid-template-columns: 1fr; gap: 8px; }
+  }
+  .stack-key {
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding-top: 6px;
+  }
+  .stack-val {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+  }
+  .stack-val .item {
+    font-size: 12px;
+    color: var(--fg);
+    padding: 5px 10px;
+    border: 1px solid var(--border-2);
+    background: var(--bg);
+    transition: all .2s ease;
+    cursor: default;
+  }
+  .stack-val .item:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .stack-val .item.p { color: var(--accent-2); border-color: rgba(143, 192, 132, 0.4); }
+
+  /* ───────── EDUCATION + LANGS ───────── */
+  .meta-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 32px;
+    margin-top: 40px;
+  }
+  @media (max-width: 780px) {
+    .meta-grid { grid-template-columns: 1fr; }
+  }
+
+  .edu {
+    border: 1px solid var(--border);
+    padding: 28px;
+    background: var(--bg-2);
+  }
+  .edu .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .edu .head .date {
+    font-size: 11px;
+    color: var(--fg-dim);
+    letter-spacing: 0.08em;
+  }
+  .edu h4 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    margin-bottom: 6px;
+  }
+  .edu .school {
+    font-size: 12px;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .edu .spec {
+    font-size: 13px;
+    color: var(--fg-muted);
+    line-height: 1.65;
+    margin-bottom: 16px;
+  }
+  .edu .gpa {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 6px 12px;
+    border: 1px solid var(--border-2);
+    font-size: 12px;
+  }
+  .edu .gpa .lbl { color: var(--fg-dim); letter-spacing: 0.08em; text-transform: uppercase; font-size: 10px; }
+  .edu .gpa .num { color: var(--accent); font-weight: 600; }
+
+  .langs {
+    border: 1px solid var(--border);
+    padding: 28px;
+  }
+  .langs h5 {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    margin-bottom: 18px;
+    font-weight: 500;
+  }
+  .lang-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--border);
+  }
+  .lang-row:last-child { border-bottom: none; }
+  .lang-row .name {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 400;
+  }
+  .lang-row .bar {
+    display: flex;
+    gap: 3px;
+  }
+  .lang-row .bar span {
+    width: 18px; height: 4px;
+    background: var(--border-2);
+  }
+  .lang-row .bar span.on { background: var(--accent); }
+
+  /* ───────── CONTACT ───────── */
+  .contact {
+    padding: 120px 0 48px;
+    text-align: left;
+  }
+  .contact h2 {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    margin-bottom: 32px;
+  }
+  .contact h2 .ital {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .contact p.lead {
+    font-size: 16px;
+    color: var(--fg-muted);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 48px;
+  }
+  .contact-links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  @media (max-width: 780px) {
+    .contact-links { grid-template-columns: 1fr; }
+  }
+  .contact-link {
+    padding: 28px 24px;
+    border-right: 1px solid var(--border);
+    display: block;
+    transition: background .25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-link:last-child { border-right: none; }
+  @media (max-width: 780px) {
+    .contact-link { border-right: none; border-bottom: 1px solid var(--border); }
+    .contact-link:last-child { border-bottom: none; }
+  }
+  .contact-link:hover {
+    background: var(--surface);
+  }
+  .contact-link .lbl {
+    font-size: 10px;
+    color: var(--fg-dim);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .contact-link .lbl .arr {
+    transition: transform .3s ease;
+  }
+  .contact-link:hover .lbl .arr {
+    transform: translate(4px, -4px);
+    color: var(--accent);
+  }
+  .contact-link .val {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    color: var(--fg);
+    line-height: 1.1;
+  }
+  .contact-link:hover .val { color: var(--accent); }
+
+  /* ───────── FOOTER ───────── */
+  footer {
+    padding: 48px 0 36px;
+    border-top: 1px solid var(--border);
+    margin-top: 48px;
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-inner .left {
+    font-size: 11px;
+    color: var(--fg-dim);
+    letter-spacing: 0.04em;
+  }
+  .footer-inner .right {
+    font-size: 11px;
+    color: var(--fg-dim);
+    letter-spacing: 0.08em;
+    display: flex;
+    gap: 16px;
+  }
+  .ascii {
+    font-size: 11px;
+    color: var(--fg-dim);
+    line-height: 1.7;
+    white-space: pre;
+    margin-top: 48px;
+    padding: 18px 22px;
+    border: 1px solid var(--border);
+    background: var(--bg-2);
+    overflow-x: auto;
+    max-width: 520px;
+    letter-spacing: 0.02em;
+  }
+
+  /* ───────── ENTRANCE ANIMATIONS ───────── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: reveal .8s cubic-bezier(0.2, 0.6, 0.2, 1) forwards;
+  }
+  @keyframes reveal {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .d1 { animation-delay: 0.1s; }
+  .d2 { animation-delay: 0.25s; }
+  .d3 { animation-delay: 0.4s; }
+  .d4 { animation-delay: 0.55s; }
+  .d5 { animation-delay: 0.7s; }
+
+  /* ───────── DECORATIVE ───────── */
+  .hex-trail {
+    position: absolute;
+    font-size: 10px;
+    color: var(--fg-dim);
+    opacity: 0.25;
+    letter-spacing: 0.05em;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+  }
+  .hex-trail.t1 { top: 40px; right: 40px; }
+  @media (max-width: 980px) {
+    .hex-trail { display: none; }
+  }
+
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-left">
+      <span class="prompt">$</span> <span class="path">~/samuel-verse</span> <span style="color:var(--fg-dim)">· portfolio.2026</span>
+    </div>
+    <div class="nav-right">
+      <a href="#about">about</a>
+      <a href="#work">work</a>
+      <a href="#projects">projects</a>
+      <a href="#stack">stack</a>
+      <a href="#contact">contact</a>
+    </div>
+    <div class="status"><span class="dot"></span>available</div>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- ═════════════ HERO ═════════════ -->
+  <section class="hero">
+    <span class="hex-trail t1">0x7F · 01000011 · 0x4C · 01000001 · 0x53 · 01010011</span>
+
+    <div class="hero-meta reveal d1">[ 01 ] &nbsp; dossier / samuel verse &nbsp; · &nbsp; jerusalem &nbsp; · &nbsp; 2026</div>
+
+    <h1 class="reveal d2">Samuel<br/>Verse<span class="ital">.</span></h1>
+
+    <div class="hero-sub reveal d3">
+      <span class="prompt">$</span>
+      <span>whoami →</span>
+      <span class="typed" id="typed"></span>
+    </div>
+
+    <p class="hero-bio reveal d4">
+      I build and defend software. Currently working at the intersection of <strong>Python development</strong>,
+      <strong>applied cryptography</strong>, and <strong>offensive-security research</strong> — designing encrypted data pipelines,
+      analyzing malware, and hardening enterprise networks against real-world threats.
+    </p>
+
+    <div class="hero-grid reveal d5">
+      <div>
+        <div class="label">Role</div>
+        <div class="value">SW &amp; Security Eng.</div>
+      </div>
+      <div>
+        <div class="label">Focus</div>
+        <div class="value">Python · Crypto · <small>blue/red</small></div>
+      </div>
+      <div>
+        <div class="label">Based</div>
+        <div class="value">Jerusalem, IL</div>
+      </div>
+      <div>
+        <div class="label">Status</div>
+        <div class="value" style="color:var(--accent-2)">● open to work</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═════════════ ABOUT ═════════════ -->
+  <section class="block" id="about">
+    <div class="section-head">
+      <div>
+        <div class="section-num">§ 02 &nbsp; // &nbsp; ABOUT</div>
+        <h2 class="section-title" style="margin-top:6px">Engineer, <span class="ital">both sides of the wire.</span></h2>
+      </div>
+      <div class="section-aside">$ cat about.md</div>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-card">
+        <div class="kv"><span class="k">Name</span><span class="v">Samuel Verse</span></div>
+        <div class="kv"><span class="k">Role</span><span class="v">Software &amp; Security Engineer</span></div>
+        <div class="kv"><span class="k">Degree</span><span class="v">B.Sc. Computer Engineering</span></div>
+        <div class="kv"><span class="k">Specialization</span><span class="v">Cybersecurity <span class="tag">GPA 86</span></span></div>
+        <div class="kv"><span class="k">Shell</span><span class="v">python / bash / c++</span></div>
+        <div class="kv"><span class="k">Domains</span><span class="v">crypto · malware · network</span></div>
+        <div class="kv"><span class="k">Interests</span><span class="v">hardware · cloud security</span></div>
+      </div>
+
+      <div class="about-prose">
+        <p>
+          I'm a software engineer with a <strong>cybersecurity specialization</strong> from the Jerusalem College
+          of Technology. My work sits in the overlap between writing production software and
+          defending it against serious adversaries.
+        </p>
+        <p>
+          Day to day, I automate security workflows in Python, deploy cryptographic key
+          infrastructure for encrypted communication with governmental entities, and reverse malware
+          samples to extract indicators of compromise. I've tuned enterprise security stacks across
+          Microsoft Defender, FortiGate, F5, and Ivanti — and spent meaningful time on the other
+          side of the wire, running penetration tests against the same kinds of systems I now
+          defend.
+        </p>
+        <p class="quote">
+          "The best defenders have broken things. The best builders have defended them."
+        </p>
+        <p>
+          I care about writing clean, auditable code, making secure-by-default the path of least
+          resistance, and finding the elegant read on a system — whether that system is a C++
+          binary, a packet capture, or an organization's threat model.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═════════════ WORK ═════════════ -->
+  <section class="block" id="work">
+    <div class="section-head">
+      <div>
+        <div class="section-num">§ 03 &nbsp; // &nbsp; EXPERIENCE</div>
+        <h2 class="section-title" style="margin-top:6px">Selected <span class="ital">work</span></h2>
+      </div>
+      <div class="section-aside">$ git log --oneline</div>
+    </div>
+
+    <div class="job">
+      <div class="job-date">
+        2024 → present <span class="current">NOW</span>
+      </div>
+      <div class="job-body">
+        <h3>Software &amp; Security Engineer</h3>
+        <div class="company">Jerusalem College of Technology</div>
+        <div class="location">Jerusalem, Israel</div>
+
+        <ul>
+          <li>Built <strong>Python automation</strong> for data transmission workflows, streamlining critical delivery to the CERT team and cutting manual reporting overhead.</li>
+          <li>Deployed <strong>cryptographic key infrastructure</strong> (PuTTYgen, WinSCP) enabling encrypted, authenticated communication with governmental entities.</li>
+          <li>Performed <strong>static and dynamic malware analysis</strong> — extracting IOCs, mapping behavior patterns, and identifying persistence mechanisms.</li>
+          <li>Led <strong>cyber threat analysis and mitigation planning</strong> across enterprise and government network segments.</li>
+          <li>Researched and implemented <strong>exposure-reduction strategies</strong>, lowering incident response time and hardening endpoint resilience.</li>
+          <li>Tuned the enterprise security stack: <strong>Microsoft Defender, FortiGate, F5 WAF, Ivanti VPN</strong> — securing campus and research networks.</li>
+          <li>Ran <strong>threat hunting and protocol analysis</strong> in Wireshark and SIEM across ARP, TCP/UDP, TLS/SSL, and HTTP to surface anomalous attacker behavior.</li>
+        </ul>
+
+        <div class="job-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Cryptography</span>
+          <span class="tag">Malware Analysis</span>
+          <span class="tag">SIEM</span>
+          <span class="tag">Wireshark</span>
+          <span class="tag">FortiGate</span>
+          <span class="tag">MS Defender</span>
+          <span class="tag">F5 WAF</span>
+          <span class="tag">Ivanti VPN</span>
+          <span class="tag">IOC Extraction</span>
+          <span class="tag">PuTTYgen / WinSCP</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-date">2023</div>
+      <div class="job-body">
+        <h3>Software Engineer</h3>
+        <div class="company">Easysec Solutions Ltd.</div>
+        <div class="location">Jerusalem, Israel</div>
+
+        <ul>
+          <li>Designed and shipped a <strong>Python automation system</strong> for security operations workflows.</li>
+          <li>Executed <strong>penetration testing and vulnerability research</strong> on enterprise networks — including VLAN hopping, CVE exploitation, and packet manipulation.</li>
+          <li>Conducted <strong>web pentesting</strong> with Burp Suite: packet interception, request modification, and authentication-flow attacks.</li>
+        </ul>
+
+        <div class="job-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Pentesting</span>
+          <span class="tag">Burp Suite</span>
+          <span class="tag">VLAN Hopping</span>
+          <span class="tag">CVE Research</span>
+          <span class="tag">Packet Manipulation</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═════════════ PROJECTS ═════════════ -->
+  <section class="block" id="projects">
+    <div class="section-head">
+      <div>
+        <div class="section-num">§ 04 &nbsp; // &nbsp; PROJECTS</div>
+        <h2 class="section-title" style="margin-top:6px">Things I've <span class="ital">taken apart.</span></h2>
+      </div>
+      <div class="section-aside">$ ls ./projects/</div>
+    </div>
+
+    <div class="projects-grid">
+      <div class="project">
+        <div class="project-head">
+          <span class="project-idx">01</span>
+          <span class="project-ext">.asm</span>
+        </div>
+        <h4>Reverse Engineering</h4>
+        <p>Hands-on teardown of compiled binaries — tracing execution flow, patching logic, and
+        recovering intent from unlabeled assembly.</p>
+        <div class="chips">
+          <span>Assembly</span>
+          <span>IDA Pro</span>
+          <span>x64dbg</span>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-head">
+          <span class="project-idx">02</span>
+          <span class="project-ext">.crypto</span>
+        </div>
+        <h4>Encryption Principles</h4>
+        <p>Implementation and analysis of classical and modern cryptographic primitives —
+        from key exchange to symmetric encryption modes.</p>
+        <div class="chips">
+          <span>Diffie–Hellman</span>
+          <span>RSA</span>
+          <span>Block Cipher</span>
+          <span>Stream Cipher</span>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-head">
+          <span class="project-idx">03</span>
+          <span class="project-ext">.cpp</span>
+        </div>
+        <h4>C++ Systems Workshop</h4>
+        <p>Deep workshop covering modern C++ mechanics — object lifecycles, exception safety,
+        polymorphism, and careful manual memory management.</p>
+        <div class="chips">
+          <span>OOP</span>
+          <span>RAII</span>
+          <span>Polymorphism</span>
+          <span>Data Structures</span>
+          <span>Algorithms</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Education + Languages -->
+    <div class="meta-grid">
+      <div class="edu">
+        <div class="head">
+          <div>
+            <div style="font-size:10px;color:var(--fg-dim);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:8px">§ Education</div>
+          </div>
+          <div class="date">09 / 2019 — 08 / 2023</div>
+        </div>
+        <h4>B.Sc. Computer Engineering</h4>
+        <div class="school">Jerusalem College of Technology</div>
+        <div class="spec">Specialization in <strong style="color:var(--fg)">Cybersecurity</strong> — curriculum spanning
+        systems programming, network security, cryptography, and secure software engineering.</div>
+        <div class="gpa"><span class="lbl">GPA</span><span class="num">86</span><span style="color:var(--fg-dim)">/100</span></div>
+      </div>
+
+      <div class="langs">
+        <h5>Languages</h5>
+        <div class="lang-row">
+          <span class="name">French</span>
+          <span class="bar"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span></span>
+        </div>
+        <div class="lang-row">
+          <span class="name">Hebrew</span>
+          <span class="bar"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span></span>
+        </div>
+        <div class="lang-row">
+          <span class="name">English</span>
+          <span class="bar"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span></span>
+        </div>
+        <div style="font-size:10px;color:var(--fg-dim);letter-spacing:0.06em;margin-top:14px">
+          // all three — native / bilingual proficiency
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═════════════ STACK ═════════════ -->
+  <section class="block" id="stack">
+    <div class="section-head">
+      <div>
+        <div class="section-num">§ 05 &nbsp; // &nbsp; STACK</div>
+        <h2 class="section-title" style="margin-top:6px">Tools of the <span class="ital">trade.</span></h2>
+      </div>
+      <div class="section-aside">$ stack --list</div>
+    </div>
+
+    <div class="stack-block">
+      <div class="stack-header">
+        <div class="stack-dots"><span></span><span></span><span></span></div>
+        <div class="stack-file">~/stack.yml · 1,247 bytes</div>
+      </div>
+      <div class="stack-body">
+
+        <div class="stack-row">
+          <div class="stack-key">Languages</div>
+          <div class="stack-val">
+            <span class="item p">Python</span>
+            <span class="item">C++</span>
+            <span class="item">Assembly</span>
+            <span class="item">Bash</span>
+          </div>
+        </div>
+
+        <div class="stack-row">
+          <div class="stack-key">Security · Offensive</div>
+          <div class="stack-val">
+            <span class="item">Burp Suite</span>
+            <span class="item">Penetration Testing</span>
+            <span class="item">VLAN Hopping</span>
+            <span class="item">CVE Exploitation</span>
+            <span class="item">Packet Manipulation</span>
+            <span class="item">Web Pentesting</span>
+          </div>
+        </div>
+
+        <div class="stack-row">
+          <div class="stack-key">Security · Defensive</div>
+          <div class="stack-val">
+            <span class="item">Microsoft Defender</span>
+            <span class="item">FortiGate</span>
+            <span class="item">F5 WAF</span>
+            <span class="item">Ivanti VPN</span>
+            <span class="item">SIEM</span>
+            <span class="item">Threat Hunting</span>
+            <span class="item">IOC Extraction</span>
+          </div>
+        </div>
+
+        <div class="stack-row">
+          <div class="stack-key">Malware / RE</div>
+          <div class="stack-val">
+            <span class="item">IDA Pro</span>
+            <span class="item">x64dbg</span>
+            <span class="item">Static Analysis</span>
+            <span class="item">Dynamic Analysis</span>
+            <span class="item">Persistence Mapping</span>
+          </div>
+        </div>
+
+        <div class="stack-row">
+          <div class="stack-key">Cryptography</div>
+          <div class="stack-val">
+            <span class="item">RSA</span>
+            <span class="item">Diffie–Hellman</span>
+            <span class="item">Block Ciphers</span>
+            <span class="item">Stream Ciphers</span>
+            <span class="item">PuTTYgen</span>
+            <span class="item">WinSCP</span>
+          </div>
+        </div>
+
+        <div class="stack-row">
+          <div class="stack-key">Networking</div>
+          <div class="stack-val">
+            <span class="item">Wireshark</span>
+            <span class="item">TCP / UDP</span>
+            <span class="item">TLS / SSL</span>
+            <span class="item">HTTP</span>
+            <span class="item">ARP</span>
+          </div>
+        </div>
+
+        <div class="stack-row">
+          <div class="stack-key">Traits</div>
+          <div class="stack-val">
+            <span class="item">Problem-Solving</span>
+            <span class="item">Adaptable</span>
+            <span class="item">Ethical</span>
+            <span class="item">Leadership</span>
+            <span class="item">Communication</span>
+            <span class="item">Teamwork</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═════════════ CONTACT ═════════════ -->
+  <section class="contact" id="contact">
+    <div class="section-head">
+      <div>
+        <div class="section-num">§ 06 &nbsp; // &nbsp; CONTACT</div>
+      </div>
+      <div class="section-aside">$ ./send_packet --dest samuel</div>
+    </div>
+
+    <h2>Let's ship <span class="ital">something</span><br/>good together.</h2>
+
+    <p class="lead">
+      Open to roles in software engineering, security engineering, and everything in between.
+      Research collaborations, freelance audits, and interesting conversations equally welcome.
+    </p>
+
+    <div class="contact-links">
+      <a class="contact-link" href="mailto:versesamuel@gmail.com">
+        <div class="lbl"><span>EMAIL</span><span class="arr">↗</span></div>
+        <div class="val">versesamuel@gmail.com</div>
+      </a>
+      <a class="contact-link" href="https://linkedin.com/in/hacker1" target="_blank" rel="noopener">
+        <div class="lbl"><span>LINKEDIN</span><span class="arr">↗</span></div>
+        <div class="val">/in/hacker1</div>
+      </a>
+      <a class="contact-link" href="https://github.com/sam7-5" target="_blank" rel="noopener">
+        <div class="lbl"><span>GITHUB</span><span class="arr">↗</span></div>
+        <div class="val">@sam7-5</div>
+      </a>
+    </div>
+
+    <pre class="ascii">-----BEGIN SIGNATURE BLOCK-----
+Name:        Samuel Verse
+Role:        Software &amp; Security Engineer
+Location:    Jerusalem, IL
+Fingerprint: 53:56 · sw+sec · mmxxvi
+-----END SIGNATURE BLOCK-----</pre>
+  </section>
+
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="left">© 2026 Samuel Verse · Jerusalem</div>
+      <div class="right">
+        <a href="#" style="color:var(--fg-muted)">back to top ↑</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Typewriter effect on hero subtitle
+  const phrases = [
+    "software & security engineer",
+    "python developer",
+    "malware analyst",
+    "crypto · networks · endpoints",
+    "builder / defender"
+  ];
+  const el = document.getElementById('typed');
+  let pi = 0, ci = 0, deleting = false;
+
+  function tick() {
+    const word = phrases[pi];
+    if (!deleting) {
+      el.textContent = word.slice(0, ci + 1);
+      ci++;
+      if (ci === word.length) {
+        deleting = true;
+        setTimeout(tick, 2200);
+        return;
+      }
+      setTimeout(tick, 55 + Math.random() * 40);
+    } else {
+      el.textContent = word.slice(0, ci - 1);
+      ci--;
+      if (ci === 0) {
+        deleting = false;
+        pi = (pi + 1) % phrases.length;
+        setTimeout(tick, 300);
+        return;
+      }
+      setTimeout(tick, 28);
+    }
+  }
+  tick();
+
+  // Subtle reveal-on-scroll for sections
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = 1;
+        e.target.style.transform = 'translateY(0)';
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.block, .contact').forEach(sec => {
+    sec.style.opacity = 0;
+    sec.style.transform = 'translateY(20px)';
+    sec.style.transition = 'opacity .9s cubic-bezier(0.2, 0.6, 0.2, 1), transform .9s cubic-bezier(0.2, 0.6, 0.2, 1)';
+    io.observe(sec);
+  });
+</script>
+
+</body>
+</html>
