@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Samuel Verse — Software & Security Engineer</title>
-<meta name="description" content="Samuel Verse. Software & Security Engineer specializing in Python, cryptography, malware analysis, and enterprise network defense." />
+<title>Samuel Verse — Software Engineer · Backend &amp; Security Research</title>
+<meta name="description" content="Samuel Verse. Software engineer specializing in Python, backend system design, applied cryptography, and security research." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,700;9..144,900&display=swap" rel="stylesheet" />
@@ -41,7 +41,6 @@
     position: relative;
   }
 
-  /* Grain overlay */
   body::before {
     content: "";
     position: fixed; inset: 0;
@@ -51,7 +50,6 @@
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  /* Scanline effect */
   body::after {
     content: "";
     position: fixed; inset: 0;
@@ -218,7 +216,7 @@
   }
 
   .hero-bio {
-    max-width: 620px;
+    max-width: 640px;
     font-size: 15px;
     color: var(--fg-muted);
     line-height: 1.7;
@@ -464,6 +462,17 @@
     color: var(--accent);
     border-color: var(--accent);
   }
+  .badge-cve {
+    display: inline-block;
+    background: var(--accent-3);
+    color: var(--bg);
+    padding: 1px 7px;
+    margin-left: 6px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    vertical-align: middle;
+  }
 
   /* ───────── PROJECTS ───────── */
   .projects-grid {
@@ -705,6 +714,17 @@
     font-size: 18px;
     font-weight: 400;
   }
+  .lang-row .level {
+    font-size: 10px;
+    color: var(--fg-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-right: 12px;
+  }
+  .lang-row .right {
+    display: flex;
+    align-items: center;
+  }
   .lang-row .bar {
     display: flex;
     gap: 3px;
@@ -826,7 +846,7 @@
     border: 1px solid var(--border);
     background: var(--bg-2);
     overflow-x: auto;
-    max-width: 520px;
+    max-width: 540px;
     letter-spacing: 0.02em;
   }
 
@@ -898,19 +918,20 @@
     </div>
 
     <p class="hero-bio reveal d4">
-      I build and defend software. Currently working at the intersection of <strong>Python development</strong>,
-      <strong>applied cryptography</strong>, and <strong>offensive-security research</strong> — designing encrypted data pipelines,
-      analyzing malware, and hardening enterprise networks against real-world threats.
+      I build backend systems and the security beneath them. Currently working at the intersection of
+      <strong>Python &amp; C++ engineering</strong>, <strong>applied cryptography</strong>, and
+      <strong>vulnerability research</strong> — designing production-grade RAG infrastructure,
+      deploying PKI for secure communications, and discovering cryptographic weaknesses in shipped software.
     </p>
 
     <div class="hero-grid reveal d5">
       <div>
         <div class="label">Role</div>
-        <div class="value">SW &amp; Security Eng.</div>
+        <div class="value">Software Engineer</div>
       </div>
       <div>
         <div class="label">Focus</div>
-        <div class="value">Python · Crypto · <small>blue/red</small></div>
+        <div class="value">Backend · Crypto · <small>security research</small></div>
       </div>
       <div>
         <div class="label">Based</div>
@@ -937,27 +958,27 @@
     <div class="about-grid">
       <div class="about-card">
         <div class="kv"><span class="k">Name</span><span class="v">Samuel Verse</span></div>
-        <div class="kv"><span class="k">Role</span><span class="v">Software &amp; Security Engineer</span></div>
+        <div class="kv"><span class="k">Role</span><span class="v">Software Engineer · Backend &amp; Security</span></div>
         <div class="kv"><span class="k">Degree</span><span class="v">B.Sc. Computer Engineering</span></div>
         <div class="kv"><span class="k">Specialization</span><span class="v">Cybersecurity <span class="tag">GPA 86</span></span></div>
-        <div class="kv"><span class="k">Shell</span><span class="v">python / bash / c++</span></div>
-        <div class="kv"><span class="k">Domains</span><span class="v">crypto · malware · network</span></div>
-        <div class="kv"><span class="k">Interests</span><span class="v">hardware · cloud security</span></div>
+        <div class="kv"><span class="k">Shell</span><span class="v">python / c++ / bash</span></div>
+        <div class="kv"><span class="k">Domains</span><span class="v">backend · crypto · security</span></div>
+        <div class="kv"><span class="k">Interests</span><span class="v">distributed systems · LLM infra</span></div>
       </div>
 
       <div class="about-prose">
         <p>
           I'm a software engineer with a <strong>cybersecurity specialization</strong> from the Jerusalem College
-          of Technology. My work sits in the overlap between writing production software and
-          defending it against serious adversaries.
+          of Technology. My work sits in the overlap between writing production backend systems and
+          understanding deeply how to break them.
         </p>
         <p>
-          Day to day, I automate security workflows in Python, deploy cryptographic key
-          infrastructure for encrypted communication with governmental entities, and reverse malware
-          samples to extract indicators of compromise. I've tuned enterprise security stacks across
-          Microsoft Defender, FortiGate, F5, and Ivanti — and spent meaningful time on the other
-          side of the wire, running penetration tests against the same kinds of systems I now
-          defend.
+          Day to day, I build <strong>Python automation and FastAPI services</strong>, deploy cryptographic
+          key infrastructure (PKI) for encrypted communication with external entities, and research
+          binary and protocol-level behavior. Most recently I designed a full
+          <strong>Retrieval-Augmented Generation</strong> platform on FastAPI / PostgreSQL + pgvector /
+          Kafka / Elasticsearch, and discovered a <strong>cryptographic key-derivation weakness</strong> in
+          a production Chrome extension — currently in CVE coordination with the vendor.
         </p>
         <p class="quote">
           "The best defenders have broken things. The best builders have defended them."
@@ -965,7 +986,7 @@
         <p>
           I care about writing clean, auditable code, making secure-by-default the path of least
           resistance, and finding the elegant read on a system — whether that system is a C++
-          binary, a packet capture, or an organization's threat model.
+          binary, a packet capture, or a vector database under load.
         </p>
       </div>
     </div>
@@ -987,32 +1008,29 @@
         2024 → present <span class="current">NOW</span>
       </div>
       <div class="job-body">
-        <h3>Software &amp; Security Engineer</h3>
+        <h3>Software Engineer, Security Infrastructure</h3>
         <div class="company">Jerusalem College of Technology</div>
         <div class="location">Jerusalem, Israel</div>
 
         <ul>
-          <li>Built <strong>Python automation</strong> for data transmission workflows, streamlining critical delivery to the CERT team and cutting manual reporting overhead.</li>
-          <li>Deployed <strong>cryptographic key infrastructure</strong> (PuTTYgen, WinSCP) enabling encrypted, authenticated communication with governmental entities.</li>
-          <li>Performed <strong>static and dynamic malware analysis</strong> — extracting IOCs, mapping behavior patterns, and identifying persistence mechanisms.</li>
-          <li>Led <strong>cyber threat analysis and mitigation planning</strong> across enterprise and government network segments.</li>
-          <li>Researched and implemented <strong>exposure-reduction strategies</strong>, lowering incident response time and hardening endpoint resilience.</li>
-          <li>Tuned the enterprise security stack: <strong>Microsoft Defender, FortiGate, F5 WAF, Ivanti VPN</strong> — securing campus and research networks.</li>
-          <li>Ran <strong>threat hunting and protocol analysis</strong> in Wireshark and SIEM across ARP, TCP/UDP, TLS/SSL, and HTTP to surface anomalous attacker behavior.</li>
+          <li>Discovered and reported a <strong>cryptographic key-derivation weakness</strong> in the Lev-Net Express Chrome extension allowing offline credential recovery; coordinated disclosure with the vendor and pursued CVE attribution via MITRE.<span class="badge-cve">CVE PENDING</span></li>
+          <li>Deployed <strong>cryptographic key infrastructure (PKI)</strong> for authenticated, encrypted communication with external entities — managing key generation and secure deployment over SSH/SCP.</li>
+          <li>Built <strong>Python automation</strong> for data transmission workflows, cutting manual reporting overhead and streamlining delivery to the CERT team.</li>
+          <li>Engineered an <strong>automated daily Python pipeline</strong> that extracts malware hash indicators (IOCs) and submits them to the national CERT for threat intelligence sharing.</li>
+          <li>Performed <strong>static and dynamic binary analysis</strong> with IDA Pro and x64dbg to extract behavioral patterns and persistence mechanisms from unknown executables.</li>
+          <li>Developed monitoring scripts and analyzed <strong>network protocols</strong> (TCP/UDP, TLS, HTTP, ARP) to surface anomalous traffic and attacker behavior.</li>
         </ul>
 
         <div class="job-tags">
           <span class="tag">Python</span>
-          <span class="tag">Cryptography</span>
-          <span class="tag">Malware Analysis</span>
-          <span class="tag">SIEM</span>
+          <span class="tag">CVE Research</span>
+          <span class="tag">Cryptography / PKI</span>
+          <span class="tag">IDA Pro</span>
+          <span class="tag">x64dbg</span>
+          <span class="tag">IOC Pipeline</span>
+          <span class="tag">SSH / SCP</span>
           <span class="tag">Wireshark</span>
-          <span class="tag">FortiGate</span>
-          <span class="tag">MS Defender</span>
-          <span class="tag">F5 WAF</span>
-          <span class="tag">Ivanti VPN</span>
-          <span class="tag">IOC Extraction</span>
-          <span class="tag">PuTTYgen / WinSCP</span>
+          <span class="tag">Malware Analysis</span>
         </div>
       </div>
     </div>
@@ -1020,23 +1038,22 @@
     <div class="job">
       <div class="job-date">2023</div>
       <div class="job-body">
-        <h3>Software Engineer</h3>
+        <h3>Software Engineer (Intern)</h3>
         <div class="company">Easysec Solutions Ltd.</div>
         <div class="location">Jerusalem, Israel</div>
 
         <ul>
-          <li>Designed and shipped a <strong>Python automation system</strong> for security operations workflows.</li>
-          <li>Executed <strong>penetration testing and vulnerability research</strong> on enterprise networks — including VLAN hopping, CVE exploitation, and packet manipulation.</li>
-          <li>Conducted <strong>web pentesting</strong> with Burp Suite: packet interception, request modification, and authentication-flow attacks.</li>
+          <li>Developed <strong>Python automation systems</strong> for internal security workflows.</li>
+          <li>Built <strong>protocol-level packet analysis</strong> scripts covering VLAN and application-layer traffic.</li>
+          <li>Built <strong>web application testing tooling</strong>, exploring authentication-flow attacks and request manipulation with Burp Suite.</li>
         </ul>
 
         <div class="job-tags">
           <span class="tag">Python</span>
-          <span class="tag">Pentesting</span>
+          <span class="tag">Packet Analysis</span>
           <span class="tag">Burp Suite</span>
-          <span class="tag">VLAN Hopping</span>
-          <span class="tag">CVE Research</span>
-          <span class="tag">Packet Manipulation</span>
+          <span class="tag">VLAN</span>
+          <span class="tag">Web Pentesting</span>
         </div>
       </div>
     </div>
@@ -1048,7 +1065,7 @@
     <div class="section-head">
       <div>
         <div class="section-num">§ 04 &nbsp; // &nbsp; PROJECTS</div>
-        <h2 class="section-title" style="margin-top:6px">Things I've <span class="ital">taken apart.</span></h2>
+        <h2 class="section-title" style="margin-top:6px">Things I've <span class="ital">built &amp; broken.</span></h2>
       </div>
       <div class="section-aside">$ ls ./projects/</div>
     </div>
@@ -1057,31 +1074,39 @@
       <div class="project">
         <div class="project-head">
           <span class="project-idx">01</span>
-          <span class="project-ext">.asm</span>
+          <span class="project-ext">.rag</span>
         </div>
-        <h4>Reverse Engineering</h4>
-        <p>Hands-on teardown of compiled binaries — tracing execution flow, patching logic, and
-        recovering intent from unlabeled assembly.</p>
+        <h4>RAG Platform — Document Q&amp;A</h4>
+        <p>Full Retrieval-Augmented Generation system enabling semantic search and LLM-grounded Q&amp;A
+        over large document corpora. Layered FastAPI backend (Controller / Service / Repository),
+        async PDF ingestion via Kafka, embeddings stored in pgvector, hybrid retrieval through Elasticsearch.
+        Handles 1,000+ page uploads without blocking the API.</p>
         <div class="chips">
-          <span>Assembly</span>
-          <span>IDA Pro</span>
-          <span>x64dbg</span>
+          <span>FastAPI</span>
+          <span>PostgreSQL</span>
+          <span>pgvector</span>
+          <span>Kafka</span>
+          <span>Elasticsearch</span>
+          <span>Gemini API</span>
         </div>
       </div>
 
       <div class="project">
         <div class="project-head">
           <span class="project-idx">02</span>
-          <span class="project-ext">.crypto</span>
+          <span class="project-ext">.asm</span>
         </div>
-        <h4>Encryption Principles</h4>
-        <p>Implementation and analysis of classical and modern cryptographic primitives —
-        from key exchange to symmetric encryption modes.</p>
+        <h4>Reverse Engineering &amp; Crypto</h4>
+        <p>Compiled-binary teardown with IDA Pro and x64dbg, reconstructing program logic from
+        unlabeled x86 / x64 assembly. Implementations of Diffie–Hellman, RSA, and block / stream
+        ciphers written from scratch in C and Python to understand the primitives by hand.</p>
         <div class="chips">
-          <span>Diffie–Hellman</span>
+          <span>Assembly</span>
+          <span>IDA Pro</span>
+          <span>x64dbg</span>
           <span>RSA</span>
-          <span>Block Cipher</span>
-          <span>Stream Cipher</span>
+          <span>Diffie–Hellman</span>
+          <span>AES</span>
         </div>
       </div>
 
@@ -1091,8 +1116,9 @@
           <span class="project-ext">.cpp</span>
         </div>
         <h4>C++ Systems Workshop</h4>
-        <p>Deep workshop covering modern C++ mechanics — object lifecycles, exception safety,
-        polymorphism, and careful manual memory management.</p>
+        <p>Deep workshop covering modern C++ mechanics — object lifecycles, RAII memory management,
+        polymorphism, exception safety, and the data structures &amp; algorithms that underpin
+        performance-critical code.</p>
         <div class="chips">
           <span>OOP</span>
           <span>RAII</span>
@@ -1123,18 +1149,27 @@
         <h5>Languages</h5>
         <div class="lang-row">
           <span class="name">French</span>
-          <span class="bar"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span></span>
+          <div class="right">
+            <span class="level">native</span>
+            <span class="bar"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span></span>
+          </div>
         </div>
         <div class="lang-row">
           <span class="name">Hebrew</span>
-          <span class="bar"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span></span>
+          <div class="right">
+            <span class="level">fluent</span>
+            <span class="bar"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span></span>
+          </div>
         </div>
         <div class="lang-row">
           <span class="name">English</span>
-          <span class="bar"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span></span>
+          <div class="right">
+            <span class="level">professional</span>
+            <span class="bar"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span></span></span>
+          </div>
         </div>
         <div style="font-size:10px;color:var(--fg-dim);letter-spacing:0.06em;margin-top:14px">
-          // all three — native / bilingual proficiency
+          // trilingual · french native · hebrew fluent · english professional
         </div>
       </div>
     </div>
@@ -1154,7 +1189,7 @@
     <div class="stack-block">
       <div class="stack-header">
         <div class="stack-dots"><span></span><span></span><span></span></div>
-        <div class="stack-file">~/stack.yml · 1,247 bytes</div>
+        <div class="stack-file">~/stack.yml · 1,389 bytes</div>
       </div>
       <div class="stack-body">
 
@@ -1162,45 +1197,35 @@
           <div class="stack-key">Languages</div>
           <div class="stack-val">
             <span class="item p">Python</span>
+            <span class="item">C</span>
             <span class="item">C++</span>
-            <span class="item">Assembly</span>
+            <span class="item">Java</span>
+            <span class="item">Assembly · x86/x64</span>
             <span class="item">Bash</span>
           </div>
         </div>
 
         <div class="stack-row">
-          <div class="stack-key">Security · Offensive</div>
+          <div class="stack-key">Backend</div>
           <div class="stack-val">
-            <span class="item">Burp Suite</span>
-            <span class="item">Penetration Testing</span>
-            <span class="item">VLAN Hopping</span>
-            <span class="item">CVE Exploitation</span>
-            <span class="item">Packet Manipulation</span>
-            <span class="item">Web Pentesting</span>
+            <span class="item">FastAPI</span>
+            <span class="item">REST APIs</span>
+            <span class="item">PostgreSQL</span>
+            <span class="item">pgvector</span>
+            <span class="item">Kafka</span>
+            <span class="item">Elasticsearch</span>
+            <span class="item">Docker</span>
           </div>
         </div>
 
         <div class="stack-row">
-          <div class="stack-key">Security · Defensive</div>
+          <div class="stack-key">AI / ML</div>
           <div class="stack-val">
-            <span class="item">Microsoft Defender</span>
-            <span class="item">FortiGate</span>
-            <span class="item">F5 WAF</span>
-            <span class="item">Ivanti VPN</span>
-            <span class="item">SIEM</span>
-            <span class="item">Threat Hunting</span>
-            <span class="item">IOC Extraction</span>
-          </div>
-        </div>
-
-        <div class="stack-row">
-          <div class="stack-key">Malware / RE</div>
-          <div class="stack-val">
-            <span class="item">IDA Pro</span>
-            <span class="item">x64dbg</span>
-            <span class="item">Static Analysis</span>
-            <span class="item">Dynamic Analysis</span>
-            <span class="item">Persistence Mapping</span>
+            <span class="item">RAG Architecture</span>
+            <span class="item">Vector Embeddings</span>
+            <span class="item">LLM Integration</span>
+            <span class="item">OpenAI API</span>
+            <span class="item">Gemini API</span>
           </div>
         </div>
 
@@ -1209,10 +1234,23 @@
           <div class="stack-val">
             <span class="item">RSA</span>
             <span class="item">Diffie–Hellman</span>
+            <span class="item">AES</span>
+            <span class="item">PKI</span>
             <span class="item">Block Ciphers</span>
             <span class="item">Stream Ciphers</span>
-            <span class="item">PuTTYgen</span>
-            <span class="item">WinSCP</span>
+          </div>
+        </div>
+
+        <div class="stack-row">
+          <div class="stack-key">Security &amp; RE</div>
+          <div class="stack-val">
+            <span class="item">IDA Pro</span>
+            <span class="item">x64dbg</span>
+            <span class="item">Burp Suite</span>
+            <span class="item">Static Analysis</span>
+            <span class="item">Dynamic Analysis</span>
+            <span class="item">Vulnerability Research</span>
+            <span class="item">IOC Extraction</span>
           </div>
         </div>
 
@@ -1228,12 +1266,23 @@
         </div>
 
         <div class="stack-row">
+          <div class="stack-key">Engineering</div>
+          <div class="stack-val">
+            <span class="item">OOP</span>
+            <span class="item">Data Structures</span>
+            <span class="item">Algorithms</span>
+            <span class="item">Multithreading</span>
+            <span class="item">Memory Management</span>
+            <span class="item">Git</span>
+          </div>
+        </div>
+
+        <div class="stack-row">
           <div class="stack-key">Traits</div>
           <div class="stack-val">
             <span class="item">Problem-Solving</span>
             <span class="item">Adaptable</span>
             <span class="item">Ethical</span>
-            <span class="item">Leadership</span>
             <span class="item">Communication</span>
             <span class="item">Teamwork</span>
           </div>
@@ -1256,8 +1305,8 @@
     <h2>Let's ship <span class="ital">something</span><br/>good together.</h2>
 
     <p class="lead">
-      Open to roles in software engineering, security engineering, and everything in between.
-      Research collaborations, freelance audits, and interesting conversations equally welcome.
+      Open to roles in software engineering, backend infrastructure, and security research.
+      Vulnerability research collaborations, freelance audits, and interesting conversations equally welcome.
     </p>
 
     <div class="contact-links">
@@ -1265,19 +1314,19 @@
         <div class="lbl"><span>EMAIL</span><span class="arr">↗</span></div>
         <div class="val">versesamuel@gmail.com</div>
       </a>
-      <a class="contact-link" href="https://linkedin.com/in/hacker1" target="_blank" rel="noopener">
+      <a class="contact-link" href="https://linkedin.com/in/samuel-verse" target="_blank" rel="noopener">
         <div class="lbl"><span>LINKEDIN</span><span class="arr">↗</span></div>
-        <div class="val">/in/hacker1</div>
+        <div class="val">/in/samuel-verse</div>
       </a>
-      <a class="contact-link" href="https://github.com/sam7-5" target="_blank" rel="noopener">
+      <a class="contact-link" href="https://github.com/samuel-verse" target="_blank" rel="noopener">
         <div class="lbl"><span>GITHUB</span><span class="arr">↗</span></div>
-        <div class="val">@sam7-5</div>
+        <div class="val">@samuel-verse</div>
       </a>
     </div>
 
     <pre class="ascii">-----BEGIN SIGNATURE BLOCK-----
 Name:        Samuel Verse
-Role:        Software &amp; Security Engineer
+Role:        Software Engineer · Backend &amp; Security
 Location:    Jerusalem, IL
 Fingerprint: 53:56 · sw+sec · mmxxvi
 -----END SIGNATURE BLOCK-----</pre>
@@ -1299,10 +1348,10 @@ Fingerprint: 53:56 · sw+sec · mmxxvi
 <script>
   // Typewriter effect on hero subtitle
   const phrases = [
-    "software & security engineer",
-    "python developer",
-    "malware analyst",
-    "crypto · networks · endpoints",
+    "software engineer · backend & security",
+    "python · c++ developer",
+    "rag · cryptography · pki",
+    "vulnerability researcher",
     "builder / defender"
   ];
   const el = document.getElementById('typed');
